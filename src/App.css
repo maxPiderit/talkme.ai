@@ -40,3 +40,56 @@
 .read-the-docs {
   color: #888;
 }
+
+@media (min-width: 768px) {
+  .App {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .ChatContainer {
+    max-width: 700px;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .MessageList {
+    height: calc(100% - 40px);
+    overflow-y: auto;
+  }
+
+  .MessageInput {
+    height: 40px;
+  }
+}
+
+@media (max-width: 767px) {
+  .ChatContainer {
+    max-width: 100%;
+    border: none;
+    border-radius: 0;
+  }
+
+  .MessageList {
+    height: calc(100% - 60px);
+  }
+
+  .MessageInput {
+    height: 60px;
+  }
+}
+
+.MainContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.MainContainer > * {
+  flex: 1;
+}

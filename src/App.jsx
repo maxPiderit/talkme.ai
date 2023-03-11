@@ -3,16 +3,16 @@ import './App.css'
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 import { MainContainer, ChatContainer, MessageList, Message, MessageInput, TypingIndicator } from '@chatscope/chat-ui-kit-react';
 
-const API_KEY = "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";
-// "Explain things like you would to a 10 year old learning how to code."
-const systemMessage = { //  Explain things like you're talking to a software professional with 5 years of experience.
-  "role": "system", "content": "Explain things like you're talking to a software professional with 2 years of experience."
+const API_KEY = "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";
+
+const systemMessage = { 
+  "role": "system", "content": "Habla en inglés. Eres mi mejor amigo. Estas genuinamente preocupado por lo que me pasa. Además, disfrutas conversar conmigo por lo que además de responder haces preguntas conectadas con la conversación, para que esta continúe. Salvo excepciones, lo ideal es que tus respuestas no contengan más de 10 palabras. No digas cosas como ¿Hay algo más en lo que pueda ayudarte hoy?, u otras similares que parecen dichas por un asistente y no por un amigo humano. Trata de que las respuestas estén conectadas con lo que te digo, por ejemplo, si te dijo que me gustan los videojuegos, idealmente pregúntame sobre cuales me gustan y por qué, salvo que ya hayamos conversado de eso. Si hago una pregunta sin el signo de interrogación, pero por el contexto se deduce que es una pregunta y no una afirmación, tómala como una pregunta. Habla de manera informal. Si hay algo que no puedes hacer, como jugar conmigo, dime que estas ocupado o inventa una excusa creíble. No me digas que no puedes porque eres un modelo de inteligencia artificial. No corrijas respecto del uso de mayúsculas o minúsculas en las palabras o la puntuación."
 }
 
 function App() {
   const [messages, setMessages] = useState([
     {
-      message: "Hello, I'm ChatGPT! Ask me anything!",
+      message: "Hello, lets practice some English!",
       sentTime: "just now",
       sender: "ChatGPT"
     }
@@ -36,19 +36,35 @@ function App() {
     await processMessageToChatGPT(newMessages);
   };
 
-  async function processMessageToChatGPT(chatMessages) { // messages is an array of messages
-    // Format messages for chatGPT API
-    // API is expecting objects in format of { role: "user" or "assistant", "content": "message here"}
-    // So we need to reformat
+  // async function processMessageToChatGPT(chatMessages) { // messages is an array of messages
+  //   // Format messages for chatGPT API
+  //   // API is expecting objects in format of { role: "user" or "assistant", "content": "message here"}
+  //   // So we need to reformat
 
+  //   let apiMessages = chatMessages.map((messageObject) => {
+  //     let role = "";
+  //     if (messageObject.sender === "ChatGPT") {
+  //       role = "assistant";
+  //     } else {
+  //       role = "user";
+  //     }
+  //     return { role: role, content: messageObject.message}
+  //   });
+
+  async function processMessageToChatGPT(chatMessages) {
+    // Format messages for chatGPT API
     let apiMessages = chatMessages.map((messageObject) => {
       let role = "";
+      let content = messageObject.message;
+  
       if (messageObject.sender === "ChatGPT") {
         role = "assistant";
       } else {
         role = "user";
+        content = " Esto no es parte de la conversación: (Corrígeme amablemente cada vez que cometa errores, en este mensaje o en los siguientes, explicando brevemente en qué consisten estos. No solo ortográficos, sino que también gramaticales o de sentido. Tu respuesta no debe contener más de 200 caracteres. No corrijas respecto del uso de mayúsculas o minúsculas en las palabras o la puntuación). Conversación: " + content;
       }
-      return { role: role, content: messageObject.message}
+  
+      return { role: role, content: content };
     });
 
 
@@ -84,7 +100,8 @@ function App() {
   }
 
   return (
-    <div className="App">
+
+      <div className="App">
       <div style={{ position:"relative", height: "800px", width: "700px"  }}>
         <MainContainer>
           <ChatContainer>       
@@ -102,6 +119,8 @@ function App() {
         </MainContainer>
       </div>
     </div>
+
+
   )
 }
 
